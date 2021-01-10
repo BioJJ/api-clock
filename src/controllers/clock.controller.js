@@ -36,7 +36,7 @@ exports.createClock = async (req, res) => {
     res.status(201).send(resp.rows);
 
   }else{
-    const angless = getAngle(horass, minutuu);
+    const angless = parseInt(getAngle(horass, minutuu));
     const datee =  new Date();
 
     const response = await db.query(
