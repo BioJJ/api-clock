@@ -1,6 +1,5 @@
 const db = require('../config/database');
 
-
 function getAngle(hours, minutes){
     if(hours === 12){
         hours = 0;
@@ -20,34 +19,41 @@ function getAngle(hours, minutes){
     return angle;
 }
 
-// ==> Método responsável por criar um novo 'Product':
+// ==> Método responsável por criar um novo 'save':
 exports.createClock = async (req, res) => {
 
-  const horass = parseInt(req.params.horas);
-  const minutuu = parseInt(req.params.minutos);
+  const horas = parseInt(req.params.horas);
+  const minutos = parseInt(req.params.minutos);
   
 
   const resp =  await db.query(
-      'SELECT * FROM clock_save where horas= $1 AND minuto=$2', [horass, minutuu]
+      'SELECT * FROM clock_save where horas= $1 AND minutos=$2', [horas, minutos]
   );
 
   if(resp.rowCount === 1){
  
-    res.status(201).send(resp.rows);
+    res.status(200).send(
+      {
+        message: 'Clock found successfully!',
+        body:{
+          ...resp.rows[0]
+        }
+      }
+    );
 
   }else{
-    const angless = getAngle(horass, minutuu);
-    const datee =  new Date();
+    const angulo = parseInt(getAngle(horas, minutos));
+    const dt =  new Date();
 
     const response = await db.query(
-        'INSERT INTO clock_save (horas, minuto, angle, dataa) VALUES ($1, $2, $3, $4)',
-        [horass, minutuu, angless, datee],
+        'INSERT INTO clock_save (horas, minutos, angulo, dt) VALUES ($1, $2, $3, $4)',
+        [horas, minutos, angulo, dt],
     );
 
     res.status(201).send({
         message: 'Clock added successfully!',
         body: {
-          clock: {horass, minutuu, angless, datee},
+          clock: {horas, minutos, angulo, dt},
         }, 
       });
    }
