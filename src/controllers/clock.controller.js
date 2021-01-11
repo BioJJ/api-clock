@@ -42,8 +42,13 @@ exports.createClock = async (req, res) => {
     );
 
   }else{
+<<<<<<< HEAD
     const angulo = parseInt(getAngle(horas, minutos));
     const dt =  new Date();
+=======
+    const angless = parseInt(getAngle(horass, minutuu));
+    const datee =  new Date();
+>>>>>>> 158f9899d3fd16db4cb404c9978904bae47843b5
 
     const response = await db.query(
         'INSERT INTO clock_save (horas, minutos, angulo, dt) VALUES ($1, $2, $3, $4)',
