@@ -3,6 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/database');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument =  require('./swagger.json');
+
 
 
 console.log(process.env.DATABASE_URL);
@@ -34,5 +37,6 @@ setTimeout(() => {
 }, 2000);
 app.use(index);
 app.use('/api/', clocktRoute);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
 
 module.exports = app;

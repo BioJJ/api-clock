@@ -1,0 +1,151 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "ClockApplication",
+        "description": "sistema contem um endpoint que receba duas informações como parâmetro, sendo o primeiro :hour e o segundo :minute e seja capaz de devolver o ângulo entre os 2 ponteiros do relógio.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "Local Dev, or from postrgres"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Clocks",
+            "description": "API for clocks in the system"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+
+
+    "paths": {
+        "/clocks": {
+            "get": {
+                "tags": [
+                    "clocks"
+                ],
+                "summary": "Get all cats in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/clocks"
+                        }
+                    }
+                }
+            }
+        },
+        "/clocks/{hours}/{minutes}": {
+            "parameters": [
+                {
+                    "name": "horas",
+                    "in": "path",
+                    "required": true,
+                    "description": "Hours of the clock that we want to match",
+                    "type": "string"
+                },
+                {
+                    "name": "minutos",
+                    "in": "path",
+                    "required": true,
+                    "description": "Minutes of the clock that we want to match",
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "tags": [
+                    "clocks"
+                ],
+                "summary": "Get cat with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "horas",
+                        "required": true,
+                        "description": "clock with hours",
+                        "schema": {
+                            "$ref": "#/definitions/horas"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "minutos",
+                        "required": true,
+                        "description": "Clock with minutes",
+                        "schema": {
+                            "$ref": "#/definitions/minutos"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/clocks"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Cat not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "horas": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },"minutos": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "clocks": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "angulo": {
+                    "type": "string"
+                },
+                "horas": {
+                    "type": "string"
+                },
+                "minutos": {
+                    "type": "string"
+                },
+                "dt": {
+                    "type": "string"
+                }
+            }
+        },
+        "clocks": {
+            "type": "object",
+            "properties": {
+                "clocks": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/clocks"
+                    }
+                }
+            }
+        }
+    }
+}
